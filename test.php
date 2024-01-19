@@ -50,6 +50,11 @@ $serialized = serialize($address);
 echo "Object address serialized: $serialized" . PHP_EOL;
 echo PHP_EOL;
 
+# 步驟 9b: 反序列化物件
+$address = unserialize($serialized);
+echo "Serialized address unserialized: $address" . PHP_EOL;
+echo PHP_EOL;
+
 // 步驟 10: 使用魔術方法 __call 呼叫 format 方法
 // Call a method using __call
 echo "Formatted address:" . $address->format() . PHP_EOL;
@@ -66,19 +71,23 @@ echo PHP_EOL;
 $newAddress = clone $address;
 echo "Full newAddress after clone as string: {$newAddress}" . PHP_EOL;
 echo PHP_EOL;
+
 var_dump($address);
 var_dump($newAddress);
 // 步驟 13: 使用魔術方法 __invoke 呼叫物件本身作為函式
 $newAddress();
-var_dump($newAddress);
-// 步驟 3: 使用魔術方法 __set 更新街道屬性
+echo PHP_EOL;
+
+// 步驟 14: 使用魔術方法 __set 更新街道屬性
 // No magic method called.
 $newAddress->street = '神岡區中山路';
 
-// 步驟 4: 使用魔術方法 __set 更新城市屬性
+// 步驟 15: 使用魔術方法 __set 更新城市屬性
 // Access properties using __set since is protected
 $newAddress->city = '台中市';
 
 var_dump($newAddress);
 echo "Full newAddress after reset as string: {$newAddress}" . PHP_EOL;
 echo PHP_EOL;
+
+//最後三個 __destruct 是因為 new 一次，clone 一次，又new 一次（在__callStatic裡面）

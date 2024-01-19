@@ -17,6 +17,10 @@ class Address
     public function __invoke(): void
     {
         $this->dump('Address object is called as a function!');
+        $args = func_get_args();
+        if ($args) {
+            echo '$args[0]: ' . $args[0] . PHP_EOL;
+        }
     }
 
     public function __get(string $name): mixed
@@ -63,7 +67,7 @@ class Address
     public function __sleep(): array
     {
         $this->dump('Address attributes to serialize, called __sleep');
-        return array('street', 'zip');
+        return ['street', 'zip', 'city', 'state', 'type'];
     }
 
     public function __wakeup(): void
@@ -90,7 +94,7 @@ class Address
     {
         self::sdump("Calling static method '$name' " . implode(', ', $arguments));
         if ($name === 'getDefaultAddress') {
-            return new Address('123 Main St', 'Meriland', 'US', 1000);
+            return new Address('板橋區文化路二段', '新北市', '台灣', 220);
         }
     }
 
